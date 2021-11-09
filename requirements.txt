@@ -1,0 +1,6 @@
+sphinx
+furo
+pytest
+pylint
+mypy
+sphinx-copybutton

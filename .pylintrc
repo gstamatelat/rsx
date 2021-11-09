@@ -1,0 +1,10 @@
+[MASTER]
+load-plugins=
+    pylint.extensions.docparams
+disable=
+    W9006 # missing-raises-doc
+ignore=sampling/test
+ignore-patterns=test_.*?py
+
+[FORMAT]
+max-line-length=120
