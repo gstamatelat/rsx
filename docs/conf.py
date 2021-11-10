@@ -22,7 +22,8 @@ extensions = [
 autodoc_default_options = {
     'members': True,
     'undoc-members': True,
-    'show-inheritance': True
+    'show-inheritance': True,
+    'inherited-members': True
 }
 
 autoclass_content = 'both'
