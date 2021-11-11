@@ -28,5 +28,9 @@ precision of these implementations to degrade as the stream size increases.
 Interface
 ---------
 Reservoir-based sampling algorithms are implemented as classes and they implement the API specified by the
-:class:`ReservoirSampling <rsx.reservoir.reservoir_sampling.ReservoirSampling>` class.
+:class:`ReservoirSampling <rsx.reservoir.reservoir_sampling.ReservoirSampling>` class. Furthermore, the
+:class:`AbstractReservoirSampling <rsx.reservoir.reservoir_sampling.AbstractReservoirSampling>` class is an abstract
+implementation of :class:`ReservoirSampling <rsx.reservoir.reservoir_sampling.ReservoirSampling>` using the concept of
+skips that decide how many elements to skip rather than deciding individually for each element whether to include it in
+the reservoir.
 """
