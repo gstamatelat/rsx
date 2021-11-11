@@ -149,8 +149,6 @@ class AbstractReservoirSampling(ReservoirSampling):
         return True
 
     def put_iterable(self, iterable: Iterable[Any]) -> bool:
-        if iterable is None:
-            raise ValueError("iterable was None")
         changed: bool = False
         for element in iterable:
             if self.put(element):
