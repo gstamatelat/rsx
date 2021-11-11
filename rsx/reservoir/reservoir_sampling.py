@@ -44,10 +44,26 @@ class ReservoirSampling(ABC):
         iterator.
 
         Returns ``True`` if the reservoir was changed as a result of this operation (if any individual :meth:`put` calls
-        returned ``True``), otherwise ``False``. If the input iterable is a random access data structure (such as a
-        :class:`list`), this method may run in sublinear time.
+        returned ``True``), otherwise ``False``.
 
         :param Iterable[Any] iterable: the iterable containing the items to be put in the instance
+        :return: a value indicating whether the reservoir was changed as a result of this operation
+        :rtype: bool
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def put_sequence(self, sequence: Sequence[Any]) -> bool:
+        """
+        Puts all the items of a :class:`Sequence` in this instance in the order at which they are returned by its
+        iterator.
+
+        This method is identical to :meth:`put_iterable` in terms of its operation but may run in sublinear time. This
+        is due to the fact that the input is known to support fast random access and the skip can be performed more
+        efficiently. As a result, it must be preferred over :meth:`put_iterable` when the population is known to be in
+        a random access container (such as a :class:`list`).
+
+        :param Sequence[Any] sequence: the sequence containing the items to be put in the instance
         :return: a value indicating whether the reservoir was changed as a result of this operation
         :rtype: bool
         """
@@ -134,6 +150,9 @@ class AbstractReservoirSampling(ReservoirSampling):
         self.__skip_function: Iterator[int] = skip_function(sample_size, self.__rng)
         self.__skip: int = next(self.__skip_function)
 
+    def __put(self, element: Any) -> None:
+        self.__reservoir[self.__rng.randrange(0, self.__sample_size)] = element
+
     def put(self, element: Any) -> bool:
         if element is None:
             raise ValueError("element was None")
@@ -144,7 +163,7 @@ class AbstractReservoirSampling(ReservoirSampling):
         if self.__skip > 0:
             self.__skip -= 1
             return False
-        self.__reservoir[self.__rng.randrange(0, self.__sample_size)] = element
+        self.__put(element)
         self.__skip = next(self.__skip_function)
         return True
 
@@ -154,6 +173,22 @@ class AbstractReservoirSampling(ReservoirSampling):
             if self.put(element):
                 changed = True
         return changed
+
+    def put_sequence(self, sequence: Sequence[Any]) -> bool:
+        return_value = False
+        offset: int = 0
+        while offset < len(sequence) and len(self.__reservoir) < self.__sample_size:
+            self.__reservoir.append(sequence[offset])
+            return_value = True
+            offset += 1
+        while len(sequence) > offset + self.__skip:
+            offset += self.__skip
+            self.__put(sequence[offset])
+            self.__skip = next(self.__skip_function)
+            offset += 1
+            return_value = True
+        self.__skip -= len(sequence) - offset
+        return return_value
 
     def sample_size(self) -> int:
         return self.__sample_size

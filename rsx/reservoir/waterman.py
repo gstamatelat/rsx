@@ -34,6 +34,7 @@ from collections.abc import Iterable
 from random import Random
 from typing import Any
 from typing import Iterator
+from typing import Sequence
 
 from rsx.reservoir.reservoir_sampling import AbstractReservoirSampling
 
@@ -42,14 +43,8 @@ def waterman_sampling(collection: Iterable[Any], sample_size: int, rng: Random =
     """
     Convenience sampling method that uses :class:`WatermanSampling` to sample ``sample_size`` items from ``collection``.
 
-    Each call to the this method will initialize a new instance of the :class:`WatermanSampling` class and contains the
-    following code:
-
-    .. code-block:: python
-
-       waterman_sampler: WatermanSampling = WatermanSampling(sample_size, rng)
-       waterman_sampler.put_iterable(collection)
-       return waterman_sampler._reservoir()
+    Each call to the this method will initialize a new instance of the :class:`WatermanSampling` class and returns its
+    reservoir in mutable form.
 
     :param Iterable[Any] collection: the population collection
     :param int sample_size: the desired sample size
@@ -58,7 +53,10 @@ def waterman_sampling(collection: Iterable[Any], sample_size: int, rng: Random =
     :rtype: list[Any]
     """
     waterman_sampler: WatermanSampling = WatermanSampling(sample_size, rng)
-    waterman_sampler.put_iterable(collection)
+    if isinstance(collection, Sequence):
+        waterman_sampler.put_sequence(collection)
+    else:
+        waterman_sampler.put_iterable(collection)
     return waterman_sampler._reservoir()  # pylint: disable=protected-access
 
 
