@@ -19,6 +19,7 @@ clean:
 	rm -rf .pytest_cache
 	rm -rf **/*/.pytest_cache
 	rm -rf .mypy_cache
+	rm -rf **/*/__pycache__
 
 
 .PHONY: mypy
