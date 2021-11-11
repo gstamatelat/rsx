@@ -17,9 +17,9 @@ clean:
 	rm -rf $(VENV)
 	rm -rf docs-build
 	rm -rf .pytest_cache
-	rm -rf **/*/.pytest_cache
+	rm -rf **/.pytest_cache
 	rm -rf .mypy_cache
-	rm -rf **/*/__pycache__
+	rm -rf **/__pycache__
 
 
 .PHONY: mypy
