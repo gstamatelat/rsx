@@ -37,9 +37,10 @@ from random import Random
 from random import SystemRandom
 from typing import Any
 from typing import Iterator
+from typing import Sequence
 
 
-def swor_population(population: list[Any], k: int, rng: Random = None) -> Iterator[Any]:
+def swor_population(population: Sequence[Any], k: int, rng: Random = None) -> Iterator[Any]:
     """
     Implementation of the simple random sampling without replacement.
 
@@ -47,7 +48,7 @@ def swor_population(population: list[Any], k: int, rng: Random = None) -> Iterat
     If you need to reuse the result of this operation you need to store it in a collection, such as a :class:`list`. The
     input population should not mutate while the iteration is in progress.
 
-    :param list[Any] population: the population
+    :param Sequence[Any] population: the population
     :param int k: the size of the sample
     :param Random rng: the random number generator to use (optional, default :code:`random.SystemRandom()`)
     :return: an :class:`iterator <typing.Iterator>` that holds the references of `k` random items of `population`
