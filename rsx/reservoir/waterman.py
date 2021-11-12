@@ -6,24 +6,6 @@ whether it should be accepted in the sample by producing a random number.
 
 This module contains the :class:`WatermanSampling` class and the convenience method :func:`waterman_sampling`.
 
-Usage
------
-Select 10 random numbers in the range [0,99]:
-
-.. code-block:: python
-
-   random_numbers: list[int] = waterman_sampling(range(100), 10)
-   print(random_numbers)
-
-This can also be achieved with the following fragment that demonstrates the class API:
-
-.. code-block:: python
-
-   ws: WatermanSampling = WatermanSampling(10)
-   ws.put_iterable(range(0,100))
-   random_numbers: Sequence[int] = ws.sample()
-   print(random_numbers)
-
 References
 ----------
 .. [1] Donald Knuth.

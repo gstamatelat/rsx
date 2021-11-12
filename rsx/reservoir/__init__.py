@@ -33,4 +33,25 @@ Reservoir-based sampling algorithms are implemented as classes and they implemen
 implementation of :class:`ReservoirSampling <rsx.reservoir.reservoir_sampling.ReservoirSampling>` using the concept of
 skips that decide how many elements to skip rather than deciding individually for each element whether to include it in
 the reservoir.
+
+Usage
+-----
+Since all unweighted reservoir implementations follow the exact same interface, they can be used interchangeably in the
+following code snippets.
+
+1. Select 10 random numbers in the range [0,99]:
+
+   .. code-block:: python
+
+      random_numbers: list[int] = waterman_sampling(range(100), 10)
+      print(random_numbers)
+
+2. This can also be achieved with the following fragment that demonstrates the class API:
+
+   .. code-block:: python
+
+      ws: WatermanSampling = WatermanSampling(10)
+      ws.put_iterable(range(0,100))
+      random_numbers: Sequence[int] = ws.sample()
+      print(random_numbers)
 """
