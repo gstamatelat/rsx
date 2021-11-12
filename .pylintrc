@@ -1,10 +1,13 @@
 [MASTER]
 load-plugins=
-    pylint.extensions.docparams
+    pylint.extensions.docparams  # Check docstring parameters
 disable=
-    W9006 # missing-raises-doc
-ignore=sampling/test
-ignore-patterns=test_.*?py
+    W9006                        # Don't report missing-raises-doc, which warns about missing raises clauses in docstrings
+ignore=sampling/test             # Ignore linter in test module
+ignore-patterns=test_.*?py       # Ignore linter in test module
 
 [FORMAT]
-max-line-length=120
+max-line-length=120              # Set maximum line length to 180 instead of 80
+
+[SIMILARITIES]
+ignore-imports=yes               # Don't report duplicate code warning from import statements
