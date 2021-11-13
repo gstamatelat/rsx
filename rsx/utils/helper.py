@@ -2,6 +2,8 @@
 Various helper functions and utilities.
 """
 
+from random import Random
+from random import SystemRandom
 from typing import Any
 from typing import Iterable
 from typing import Sequence
@@ -45,6 +47,25 @@ def check_feasibility(weights: Iterable[float], sample_size: int) -> bool:
         if sample_size * weight / weight_sum > 1:
             return False
     return True
+
+
+def random_exclusive(rng: Random = None):
+    """
+    Returns a pseudorandom double value in :math:`(0,1)` exclusive.
+
+    This method will perform repeated calls to ``rng.random()`` until the value returned is not 0. In practice, the
+    probability to get a zero is extremely low but some algorithms require exclusiveness.
+
+    :param Random rng: the random number generator to use (optional, default ``SystemRandom()``)
+    :return: a pseudorandom float value in `(0,1)` exclusive
+    :rtype: float
+    """
+    if rng is None:
+        rng = SystemRandom()
+    random_value: float = 0.0
+    while random_value == 0.0:
+        random_value = rng.random()
+    return random_value
 
 
 class SequenceDecorator(Sequence[Any]):
