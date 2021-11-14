@@ -8,6 +8,7 @@ from typing import Iterable
 import pytest
 
 import rsx.reservoir.vitter_x
+import rsx.reservoir.vitter_z
 import rsx.reservoir.waterman
 import rsx.simple.swor
 import rsx.systematic.ordered
@@ -21,6 +22,10 @@ def sampling_waterman(population: list[Any], weights: list[float], sample_size: 
 
 def sampling_vitter_x(population: list[Any], weights: list[float], sample_size: int) -> Iterable[Any]:
     return rsx.reservoir.vitter_x.vitter_x_sampling(population, sample_size)
+
+
+def sampling_vitter_z(population: list[Any], weights: list[float], sample_size: int) -> Iterable[Any]:
+    return rsx.reservoir.vitter_z.vitter_z_sampling(population, sample_size)
 
 
 def sampling_simple_without_replacement(population: list[Any], weights: list[float], sample_size: int) -> Iterable[Any]:
@@ -42,6 +47,7 @@ def sampling_jessen(population: list[Any], weights: list[float], sample_size: in
     "sampling_method", [
         sampling_waterman,
         sampling_vitter_x,
+        sampling_vitter_z,
         sampling_simple_without_replacement,
         sampling_ordered_systematic,
         sampling_jessen
