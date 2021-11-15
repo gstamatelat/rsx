@@ -22,8 +22,8 @@ Precision
 ---------
 Many implementations have an accumulating state which causes the precision of the algorithms to degrade as the stream
 becomes bigger. An example might be a variable state which strictly increases or decreases as elements are read from the
-stream. Because the implementations use finite precision data types (usually double or long), this behavior causes the
-precision of these implementations to degrade as the stream size increases.
+stream. Because the implementations use finite precision data types (float or finite precision random number
+generators), this behavior causes the precision of these implementations to degrade as the stream size increases.
 
 Interface
 ---------
