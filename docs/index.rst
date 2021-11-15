@@ -10,6 +10,7 @@ RSX
    Systematic Sampling <systematic/index>
    Whole Sampling <whole/index>
    Reservoir Sampling <reservoir/index>
+   Weighted Reservoir Sampling <weighted_reservoir/index>
 
 .. toctree::
    :maxdepth: 2
