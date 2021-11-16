@@ -7,4 +7,6 @@ Weighted Reservoir Sampling
    :hidden:
    :maxdepth: 2
 
+   Weighted Reservoir Sampling <weighted_reservoir_sampling>
+
 .. automodule:: rsx.weighted_reservoir
