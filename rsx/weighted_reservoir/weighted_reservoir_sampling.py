@@ -1,6 +1,7 @@
 """
-Contains the implementation of the :class:`WeightedReservoirSampling` abstract base class of all weighted reservoir
-sampling algorithms.
+Contains the :class:`WeightedReservoirSampling` abstract base class of all weighted reservoir sampling algorithms and
+its abstract class :class:`AbstractWeightedReservoirSampling` that simplifies the implementation of
+:class:`WeightedReservoirSampling`.
 """
 
 from abc import ABC, abstractmethod
@@ -87,3 +88,23 @@ class WeightedReservoirSampling(ABC):
         :rtype: Collection[Any]
         """
         raise NotImplementedError
+
+
+class AbstractWeightedReservoirSampling(WeightedReservoirSampling, ABC):
+    """
+    Abstract implementation of :class:`WeightedReservoirSampling` that minimizes the effort to implement the base class.
+
+    This abstract class implements the :meth:`put_iterable` method.
+    """
+
+    def put_iterable(self, elements: Iterable[Any], weights: Iterable[float] = None) -> bool:
+        changed: bool = False
+        if weights is None:
+            for element in elements:
+                if self.put(element=element, weight=None):
+                    changed = True
+        else:
+            for (element, weight) in zip(elements, weights):
+                if self.put(element=element, weight=weight):
+                    changed = True
+        return changed
