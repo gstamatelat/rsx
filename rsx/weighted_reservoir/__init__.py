@@ -12,4 +12,14 @@ sampling methods and implementations in this package may not exhibit identical b
 the first order inclusion probabilities. The contract is, however, that a higher weight value suggests a higher
 probability for an item to be included in the sample. Implementations may also define certain restrictions on the values
 of the weight and violations will result in :class:`BadWeightException <rsx.utils.exceptions.BadWeightException>`.
+
+Interface
+---------
+Reservoir-based sampling algorithms are implemented as classes and they implement the API specified by the
+:class:`WeightedReservoirSampling <rsx.weighted_reservoir.weighted_reservoir_sampling.WeightedReservoirSampling>` class.
+Furthermore, the :class:`WeightedAbstractReservoirSampling
+<rsx.weighted_reservoir.weighted_reservoir_sampling.AbstractWeightedReservoirSampling>` class is an abstract
+implementation of :class:`WeightedReservoirSampling
+<rsx.weighted_reservoir.weighted_reservoir_sampling.WeightedReservoirSampling>` with the most basic functionality of
+weighted reservoir sampling.
 """
