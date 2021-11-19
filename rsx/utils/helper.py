@@ -2,6 +2,7 @@
 Various helper functions and utilities.
 """
 
+import functools
 from random import Random
 from random import SystemRandom
 from typing import Any
@@ -66,6 +67,31 @@ def random_exclusive(rng: Random = None):
     while random_value == 0.0:
         random_value = rng.random()
     return random_value
+
+
+@functools.total_ordering
+class Weighted:
+    """
+    Represents an item with a weight.
+
+    This class is intended to be used in weighted random sampling algorithms.
+    """
+
+    def __init__(self, value: object, weight: float):
+        """
+        The constructor initializes the instance with an object and a weight.
+
+        :param object value: the object
+        :param float weight: the weight of the object
+        """
+        self.value: object = value
+        self.weight: float = weight
+
+    def __lt__(self, other) -> bool:
+        return self.weight.__lt__(other.weight)
+
+    def __eq__(self, other) -> bool:
+        return self.weight.__eq__(other.weight)
 
 
 class SequenceDecorator(Sequence[Any]):

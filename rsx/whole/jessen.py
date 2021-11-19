@@ -54,7 +54,6 @@ References
 
 from __future__ import annotations
 
-import functools
 import heapq
 import random
 from typing import Any
@@ -68,20 +67,7 @@ from typing import Union
 from rsx.utils.alias import AliasMethod
 from rsx.utils.exceptions import BadWeightError
 from rsx.utils.exceptions import InfeasibleCaseError
-from rsx.utils.helper import SequenceDecorator
-
-
-@functools.total_ordering
-class _Weighted:
-    def __init__(self, value: object, weight: float):
-        self.value: object = value
-        self.weight: float = weight
-
-    def __lt__(self, other) -> bool:
-        return self.weight.__lt__(other.weight)
-
-    def __eq__(self, other) -> bool:
-        return self.weight.__eq__(other.weight)
+from rsx.utils.helper import SequenceDecorator, Weighted
 
 
 class JessenSample(SequenceDecorator):
@@ -132,7 +118,7 @@ class JessenBuilder:
         """
         The constructor initializes a new builder with no items in the population and runs in constant time.
         """
-        self.__heap: list[_Weighted] = []
+        self.__heap: list[Weighted] = []
         self.__weight_sum: float = 0
 
     def add(self, item: object, weight: float) -> JessenBuilder:
@@ -146,7 +132,7 @@ class JessenBuilder:
         """
         if weight <= 0:
             raise BadWeightError("weight must be strictly positive")
-        self.__heap.append(_Weighted(item, weight))
+        self.__heap.append(Weighted(item, weight))
         self.__weight_sum += weight
         return self
 
@@ -293,10 +279,10 @@ class JessenBuilder:
         heapq.heapify(self.__heap)
         overall_balance: float = 1.0
         while len(self.__heap) >= sample_size:
-            new_weighted: list[_Weighted] = []
+            new_weighted: list[Weighted] = []
             new_sample: list[object] = []
             for _ in range(sample_size):
-                popped: _Weighted = heapq.heappop(self.__heap)
+                popped: Weighted = heapq.heappop(self.__heap)
                 new_weighted.append(popped)
                 new_sample.append(popped.value)
             reduce_by: float = min(-new_weighted[-1].weight, overall_balance + self.__heap[0].weight) \
