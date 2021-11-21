@@ -116,7 +116,7 @@ class SequenceDecorator(Sequence[Any]):
         return self.__data.__getitem__(item)
 
     def __eq__(self, o: Any) -> bool:
-        return self.__data.__eq__(o)
+        return self.__data.__eq__(o.__data)
 
     def __repr__(self) -> str:
         return self.__data.__repr__()
