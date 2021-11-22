@@ -50,7 +50,7 @@ def check_feasibility(weights: Iterable[float], sample_size: int) -> bool:
     return True
 
 
-def random_exclusive(rng: Random = None):
+def random_exclusive(rng: Random = None) -> float:
     """
     Returns a pseudorandom double value in :math:`(0,1)` exclusive.
 
