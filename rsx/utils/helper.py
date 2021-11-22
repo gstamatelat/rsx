@@ -3,6 +3,7 @@ Various helper functions and utilities.
 """
 
 import functools
+from collections import Counter
 from random import Random
 from random import SystemRandom
 from typing import Any
@@ -67,6 +68,30 @@ def random_exclusive(rng: Random = None) -> float:
     while random_value == 0.0:
         random_value = rng.random()
     return random_value
+
+
+def sequence_equals(a: Sequence[Any], b: Sequence[Any]) -> bool:  # pylint: disable=invalid-name
+    """
+    Returns a value indicating whether two sequences contain the same elements.
+
+    More specifically, returns ``True`` if the two sequences are of the same size, contain the same distinct elements,
+    and each element has equal appearance frequency on both collections.
+
+    This method runs in time proportional to the size of the arguments and uses extra space that is also proportional
+    to the size of the arguments.
+
+    :param Sequence[Any] a: one collection
+    :param Sequence[Any] b: the other collection
+    :return: ``True`` if ``a`` and ``b`` contain the same elements, otherwise ``False``
+    :rtype: bool
+    """
+    if len(a) != len(b):
+        return False
+    if a is b:
+        return True
+    counter_a: Counter = Counter(a)
+    counter_b: Counter = Counter(b)
+    return counter_a == counter_b
 
 
 @functools.total_ordering

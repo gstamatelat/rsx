@@ -97,6 +97,13 @@ class ReservoirSampling(ABC):
         """
         Returns a read-only view of the reservoir of this instance.
 
+        The returned collection is a :class:`Sequence <collections.abc.Sequence>` but the elements are in no particular
+        order inside the collection. Because the ``__eq__`` operator in sequences is implemented by considering the
+        order of the elements, this may create a situation where two samples containing the same elements do not
+        evaluate as equal because of different order. As an aid, the :func:`sequence_equals
+        <rsx.utils.helper.sequence_equals>` function can be used to determine whether two sequences contain the same
+        elements.
+
         The reservoir cannot be ``None`` but it can be empty if no elements have been put in the instance. This method
         always returns the same reference and runs in constant time.
 
