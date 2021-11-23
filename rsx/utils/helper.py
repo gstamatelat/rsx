@@ -141,7 +141,14 @@ class SequenceDecorator(Sequence[Any]):
         return self.__data.__getitem__(item)
 
     def __eq__(self, o: Any) -> bool:
-        return self.__data.__eq__(o.__data)
+        if not isinstance(o, Sequence):
+            return False
+        if len(self) != len(o):
+            return False
+        for x1, x2 in zip(self, o):
+            if x1 != x2:
+                return False
+        return True
 
     def __repr__(self) -> str:
         return self.__data.__repr__()
