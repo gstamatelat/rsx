@@ -6,7 +6,7 @@ import functools
 from collections import Counter
 from random import Random
 from random import SystemRandom
-from typing import Any
+from typing import Any, Callable
 from typing import Iterable
 from typing import Sequence
 
@@ -125,21 +125,26 @@ class SequenceDecorator(Sequence[Any]):
     <collections.abc.Sequence>` container.
     """
 
-    def __init__(self, data: Sequence[Any]) -> None:
+    def __init__(self, data: Sequence[Any], mapping_function: Callable[[Any], Any] = lambda x: x) -> None:
         """
         The constructor initializes a new instance of this class as a decorator of the given underlying sequence. The
-        instance created will be backed by that sequence. The constructor runs in constant time.
+        instance created will be backed by that sequence. The optional ``mapping_function`` argument maps all items of
+        the given input collection and defaults to the identity function if not given. The constructor runs in constant
+        time.
 
         :param Sequence[Any] data: the underlying list to create this decorator from
+        :param Callable[[Any], Any] mapping_function: the mapping function of the elements (optional, default: the
+                                                      identity function)
         """
         super().__init__()
         self.__data = data
+        self.__mapping_function = mapping_function
 
     def __len__(self) -> int:
         return self.__data.__len__()
 
     def __getitem__(self, item) -> Any:
-        return self.__data.__getitem__(item)
+        return self.__mapping_function(self.__data.__getitem__(item))
 
     def __eq__(self, o: Any) -> bool:
         if not isinstance(o, Sequence):
