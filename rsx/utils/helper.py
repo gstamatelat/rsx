@@ -121,15 +121,16 @@ class Weighted:
 
 class SequenceDecorator(Sequence[Any]):
     """
-    Auxiliary utility that decorates a :class:`list` around a read-only :class:`typing.Sequence` container.
+    Auxiliary utility that decorates a :class:`Sequence <collections.abc.Sequence>` around a read-only :class:`Sequence
+    <collections.abc.Sequence>` container.
     """
 
-    def __init__(self, data: list[Any]) -> None:
+    def __init__(self, data: Sequence[Any]) -> None:
         """
-        The constructor initializes a new instance of this class as a decorator of the given underlying list. The
-        instance created will be backed by that list. The constructor runs in constant time.
+        The constructor initializes a new instance of this class as a decorator of the given underlying sequence. The
+        instance created will be backed by that sequence. The constructor runs in constant time.
 
-        :param list[Any] data: the underlying list to create this decorator from
+        :param Sequence[Any] data: the underlying list to create this decorator from
         """
         super().__init__()
         self.__data = data
