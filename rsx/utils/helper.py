@@ -151,7 +151,7 @@ class SequenceDecorator(Sequence[Any]):
             return False
         if len(self) != len(o):
             return False
-        for x1, x2 in zip(self, o):
+        for x1, x2 in zip(self, o):  # pylint: disable=invalid-name
             if x1 != x2:
                 return False
         return True
