@@ -146,7 +146,7 @@ class SequenceDecorator(Sequence[Any]):
     def __getitem__(self, item) -> Any:
         return self.__mapping_function(self.__data.__getitem__(item))
 
-    def __eq__(self, o: Any) -> bool:
+    def __eq__(self, o: Any) -> bool:  # pylint: disable=invalid-name
         if not isinstance(o, Sequence):
             return False
         if len(self) != len(o):
