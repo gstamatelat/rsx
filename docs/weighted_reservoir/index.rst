@@ -8,5 +8,6 @@ Weighted Reservoir Sampling
    :maxdepth: 2
 
    Weighted Reservoir Sampling <weighted_reservoir_sampling>
+   Order Sampling <order_sampling>
 
 .. automodule:: rsx.weighted_reservoir
