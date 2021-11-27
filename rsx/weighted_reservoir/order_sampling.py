@@ -89,4 +89,4 @@ class OrderSampling(AbstractWeightedReservoirSampling, ABC):
         return self.__stream_size
 
     def sample(self) -> Collection[Any]:
-        return SequenceDecorator(self.__heap, lambda x: x.weight)
+        return SequenceDecorator(self.__heap, lambda x: x.value)
