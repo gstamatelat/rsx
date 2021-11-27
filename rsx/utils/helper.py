@@ -157,4 +157,4 @@ class SequenceDecorator(Sequence[Any]):
         return True
 
     def __repr__(self) -> str:
-        return self.__data.__repr__()
+        return "[{}]".format(", ".join(map(self.__mapping_function, self.__data)))
