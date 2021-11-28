@@ -2,12 +2,38 @@
 Helper functions for the tests.
 """
 
-import typing
 from typing import Any
+from typing import Callable
 from typing import Iterable
 
 
-def first_order_mean_squared_error(method: typing.Callable[[list[Any], list[float], int], Iterable[Any]],
+def first_order_probabilities(method: Callable[[list[Any], list[float], int], Iterable[Any]],
+                              iterations: int,
+                              population_size: int,
+                              sample_size: int,
+                              weights: list[float]) -> dict[Any, int]:
+    """
+    Calculates the first order inclusion frequencies for the parameters given and returns it as a dictionary.
+    """
+    if iterations < 1:
+        raise ValueError("iterations cannot be less than 1")
+    if sample_size < 1:
+        raise ValueError("sample_size cannot be less than 1")
+    if sample_size > population_size:
+        raise ValueError("sample_size cannot be higher than population_size")
+    if len(weights) != population_size:
+        raise ValueError("the weights must be as many as the population elements")
+    frequencies: dict[Any, int] = {}
+    for _ in range(iterations):
+        sample: Iterable[Any] = method(list(range(population_size)), weights, sample_size)
+        for element in sample:
+            if element not in frequencies:
+                frequencies[element] = 0
+            frequencies[element] += 1
+    return frequencies
+
+
+def first_order_mean_squared_error(method: Callable[[list[Any], list[float], int], Iterable[Any]],
                                    iterations: int,
                                    population_size: int,
                                    sample_size: int,
@@ -26,22 +52,24 @@ def first_order_mean_squared_error(method: typing.Callable[[list[Any], list[floa
              to the uniform inclusion probabilities
     :rtype: float
     """
-    if iterations < 1:
-        raise ValueError("iterations cannot be less than 1")
-    if sample_size < 1:
-        raise ValueError("sample_size cannot be less than 1")
-    if sample_size > population_size:
-        raise ValueError("sample_size cannot be higher than population_size")
-    if len(weights) != population_size:
-        raise ValueError("the weights must be as many as the population elements")
+    # if iterations < 1:
+    #     raise ValueError("iterations cannot be less than 1")
+    # if sample_size < 1:
+    #     raise ValueError("sample_size cannot be less than 1")
+    # if sample_size > population_size:
+    #     raise ValueError("sample_size cannot be higher than population_size")
+    # if len(weights) != population_size:
+    #     raise ValueError("the weights must be as many as the population elements")
+    # weight_sum: float = sum(weights)
+    # frequencies: dict[Any, int] = {}
+    # for _ in range(iterations):
+    #     sample: Iterable[Any] = method(list(range(population_size)), weights, sample_size)
+    #     for element in sample:
+    #         if element not in frequencies:
+    #             frequencies[element] = 0
+    #         frequencies[element] += 1
     weight_sum: float = sum(weights)
-    frequencies: dict[Any, int] = {}
-    for _ in range(iterations):
-        sample: Iterable[Any] = method(list(range(population_size)), weights, sample_size)
-        for element in sample:
-            if element not in frequencies:
-                frequencies[element] = 0
-            frequencies[element] += 1
+    frequencies = first_order_probabilities(method, iterations, population_size, sample_size, weights)
     return sum(
         (v / iterations - weights[k] * sample_size / weight_sum) ** 2 for k, v in frequencies.items()
     ) / population_size
