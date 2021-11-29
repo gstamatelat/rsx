@@ -7,11 +7,11 @@ from typing import Callable
 from typing import Iterable
 
 
-def first_order_probabilities(method: Callable[[list[Any], list[float], int], Iterable[Any]],
-                              iterations: int,
-                              population_size: int,
-                              sample_size: int,
-                              weights: list[float]) -> dict[Any, int]:
+def first_order_frequencies(method: Callable[[list[Any], list[float], int], Iterable[Any]],
+                            iterations: int,
+                            population_size: int,
+                            sample_size: int,
+                            weights: list[float]) -> dict[Any, int]:
     """
     Calculates the first order inclusion frequencies for the parameters given and returns it as a dictionary.
     """
@@ -69,7 +69,7 @@ def first_order_mean_squared_error(method: Callable[[list[Any], list[float], int
     #             frequencies[element] = 0
     #         frequencies[element] += 1
     weight_sum: float = sum(weights)
-    frequencies = first_order_probabilities(method, iterations, population_size, sample_size, weights)
+    frequencies = first_order_frequencies(method, iterations, population_size, sample_size, weights)
     return sum(
         (v / iterations - weights[k] * sample_size / weight_sum) ** 2 for k, v in frequencies.items()
     ) / population_size
