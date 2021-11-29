@@ -16,11 +16,9 @@ $(VENV)/$(VENV_BIN)/activate: requirements.txt
 clean:
 	rm -rf $(VENV)
 	rm -rf docs-build
-	rm -rf .pytest_cache
-	rm -rf **/.pytest_cache
-	rm -rf .mypy_cache
-	rm -rf **/__pycache__
-
+	find . -type d -name ".pytest_cache" -prune -exec rm -rf "{}" \;
+	find . -type d -name ".mypy_cache" -prune -exec rm -rf "{}" \;
+	find . -type d -name "__pycache__" -prune -exec rm -rf "{}" \;
 
 .PHONY: mypy
 mypy: $(VENV)/$(VENV_BIN)/activate
