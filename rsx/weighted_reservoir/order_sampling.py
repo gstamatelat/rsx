@@ -5,6 +5,8 @@ According to order sampling, each unit of the population is assigned a key based
 largest key are selected as the sample. The implementation is based on a priority queue algorithm, in order to abide by
 the specification of the reservoir sampling interface, within the abstract class :class:`OrderSampling`.
 
+References
+----------
 .. [1] Yves G. Berger, Yves Tillé.
        Sampling with Unequal Probabilities (2009).
 """
