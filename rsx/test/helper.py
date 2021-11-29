@@ -52,22 +52,14 @@ def first_order_mean_squared_error(method: Callable[[list[Any], list[float], int
              to the uniform inclusion probabilities
     :rtype: float
     """
-    # if iterations < 1:
-    #     raise ValueError("iterations cannot be less than 1")
-    # if sample_size < 1:
-    #     raise ValueError("sample_size cannot be less than 1")
-    # if sample_size > population_size:
-    #     raise ValueError("sample_size cannot be higher than population_size")
-    # if len(weights) != population_size:
-    #     raise ValueError("the weights must be as many as the population elements")
-    # weight_sum: float = sum(weights)
-    # frequencies: dict[Any, int] = {}
-    # for _ in range(iterations):
-    #     sample: Iterable[Any] = method(list(range(population_size)), weights, sample_size)
-    #     for element in sample:
-    #         if element not in frequencies:
-    #             frequencies[element] = 0
-    #         frequencies[element] += 1
+    if iterations < 1:
+        raise ValueError("iterations cannot be less than 1")
+    if sample_size < 1:
+        raise ValueError("sample_size cannot be less than 1")
+    if sample_size > population_size:
+        raise ValueError("sample_size cannot be higher than population_size")
+    if len(weights) != population_size:
+        raise ValueError("the weights must be as many as the population elements")
     weight_sum: float = sum(weights)
     frequencies = first_order_frequencies(method, iterations, population_size, sample_size, weights)
     return sum(
