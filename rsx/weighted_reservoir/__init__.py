@@ -22,4 +22,38 @@ Furthermore, the :class:`WeightedAbstractReservoirSampling
 implementation of :class:`WeightedReservoirSampling
 <rsx.weighted_reservoir.weighted_reservoir_sampling.WeightedReservoirSampling>` with the most basic functionality of
 weighted reservoir sampling.
+
+Usage
+-----
+Since all weighted reservoir implementations follow the exact same interface, they can be used interchangeably in the
+following code snippets.
+
+1. Select 2 terms from a vocabulary, based on their weight:
+
+   .. code-block:: python
+
+      rs: WeightedReservoirSampling = EfraimidisSampling(2)
+      rs.put("collection", 1)
+      rs.put("algorithms", 2)
+      rs.put("python", 2)
+      rs.put("random", 3)
+      rs.put("sampling", 4)
+      rs.put("reservoir", 5)
+      print(rs.sample())
+
+2. The same example using the ``put_iterable`` API:
+
+   .. code-block:: python
+
+      d: dict[str, int] = {
+          "collections": 1,
+          "algorithms":  2,
+          "python":      2,
+          "random":      3,
+          "sampling":    4,
+          "reservoir":   5
+      }
+      rs: WeightedReservoirSampling = EfraimidisSampling(2)
+      rs.put_iterable(d.keys(), d.values())
+      print(rs.sample())
 """
