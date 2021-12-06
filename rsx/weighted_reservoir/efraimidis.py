@@ -3,7 +3,13 @@ Implementation of the algorithm by Efraimidis and Spirakis in [1]_.
 
 This algorithm does not satisfy the ratio estimator property but is an approximation of it. The interpretation of the
 weights coincides with the selection probabilities on each implicit round of selections with replacement. Weights must
-be in the range :math:`(0, \infty)` and the default weight in this implementation is :math:`1.0`.
+be in the range :math:`(0, \infty)` and the default weight in this implementation is :math:`1.0`. This is an
+implementation of :class:`OrderSampling <rsx.weighted_reservoir.order_sampling.OrderSampling>` where the keys are equal
+to
+
+.. math::
+
+   r^{1/w} \text{  or  } \frac{\ln r}{w}.
 
 References
 ----------
