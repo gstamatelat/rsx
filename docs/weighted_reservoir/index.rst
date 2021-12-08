@@ -10,5 +10,6 @@ Weighted Reservoir Sampling
    Weighted Reservoir Sampling <weighted_reservoir_sampling>
    Order Sampling <order_sampling>
    Efraimidis Sampling <efraimidis>
+   Pareto Sampling <pareto>
 
 .. automodule:: rsx.weighted_reservoir
