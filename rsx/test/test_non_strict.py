@@ -9,6 +9,7 @@ import pytest
 
 import rsx.weighted_reservoir.efraimidis
 import rsx.weighted_reservoir.pareto
+import rsx.weighted_reservoir.sequential_poisson
 from rsx.test.helper import first_order_frequencies
 
 
@@ -26,10 +27,18 @@ def sampling_pareto(population: list[Any], weights: list[float], sample_size: in
     return method.sample()
 
 
+def sampling_sequential_poisson(population: list[Any], weights: list[float], sample_size: int) -> Iterable[int]:
+    method = rsx.weighted_reservoir.sequential_poisson.SequentialPoissonSampling(sample_size)
+    for i in range(len(population)):
+        method.put(population[i], weights[i])
+    return method.sample()
+
+
 @pytest.mark.parametrize(
     "sampling_method", [
         sampling_efraimidis,
-        sampling_pareto
+        sampling_pareto,
+        sampling_sequential_poisson
     ]
 )
 def test_first_order(sampling_method):
